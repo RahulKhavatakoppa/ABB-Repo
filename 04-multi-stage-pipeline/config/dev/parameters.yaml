@@ -1,0 +1,10 @@
+# Dev environment parameters – Task 4
+variables:
+  - name: AppUrl
+    value: 'https://devops-assessment-dev.azurewebsites.net'
+  - name: Replicas
+    value: '1'
+  - name: NodeEnv
+    value: 'development'
+  - name: LogLevel
+    value: 'debug'

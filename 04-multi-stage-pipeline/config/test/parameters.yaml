@@ -1,0 +1,10 @@
+# Test environment parameters – Task 4
+variables:
+  - name: AppUrl
+    value: 'https://devops-assessment-test.azurewebsites.net'
+  - name: Replicas
+    value: '2'
+  - name: NodeEnv
+    value: 'test'
+  - name: LogLevel
+    value: 'info'
