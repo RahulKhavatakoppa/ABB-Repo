@@ -1,0 +1,13 @@
+{
+  "name": "devops-assessment-app",
+  "version": "1.0.0",
+  "description": "Sample Node.js app for CI/CD and containerization tasks",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node test/run.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

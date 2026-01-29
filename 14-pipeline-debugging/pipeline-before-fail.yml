@@ -1,0 +1,41 @@
+# Task 14 – Before fix: script uses $(APP_ENV) but only AppEnv set → deploy fails (Azure DevOps example)
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  # BUG: Variable name typo or not defined in variable group – deploy step fails
+  # Correct name might be AppEnv or APP_ENV set in Library; here it was forgotten.
+  AppEnv: 'development'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: BuildJob
+        steps:
+          - script: echo "Building for $(AppEnv)"
+            displayName: 'Build'
+          - script: echo "Publishing..."
+            displayName: 'Publish'
+
+  - stage: Deploy
+    dependsOn: Build
+    jobs:
+      - deployment: DeployJob
+        environment: 'Staging'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                # FAIL: $(APP_ENV) is empty if only AppEnv is set – script fails or deploys wrong config
+                - script: |
+                    echo "Deploying to environment: $(APP_ENV)"
+                    if [ -z "$(APP_ENV)" ]; then
+                      echo "ERROR: APP_ENV is not set"
+                      exit 1
+                    fi
+                  displayName: 'Deploy (fails when APP_ENV not set)'
