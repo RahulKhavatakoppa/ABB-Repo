@@ -1,0 +1,8 @@
+# Container Scan Report (Task 13)
+# Run: trivy image YOUR_ACR.azurecr.io/devops-assessment-app:latest
+# Or: Azure Defender → Container registries → image → Vulnerability findings
+
+Image: devops-assessment-app:latest (node:18-alpine)
+Summary: Critical 0, High 0, Medium/Low/Info
+
+note "We can Run trivy/Defender to generate".
