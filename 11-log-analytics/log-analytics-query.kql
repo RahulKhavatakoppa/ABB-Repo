@@ -1,0 +1,24 @@
+// Task 11 – KQL: Application error patterns in the last 24 hours
+// Run in Azure Portal: Log Analytics workspace → Logs. Adjust table names to match your app (e.g. ContainerLog, AppTraces, custom app table).
+
+// Option A: Container stdout/stderr (common for AKS apps)
+ContainerLog
+| where TimeGenerated > ago(24h)
+| where LogEntry contains "error" or LogEntry contains "Error" or LogEntry contains "ERROR" or LogEntry contains "exception"
+| project TimeGenerated, PodName, LogEntry, Computer
+| order by TimeGenerated desc
+
+// Option B: Summarise error patterns (count by message pattern)
+ContainerLog
+| where TimeGenerated > ago(24h)
+| where LogEntry has_any ("error", "Error", "ERROR", "exception", "fail")
+| extend ErrorSnippet = extract(@"error[^\n]{0,80}", 0, LogEntry, typeof(string))
+| summarize Count = count(), LastSeen = max(TimeGenerated) by bin(TimeGenerated, 1h), ErrorSnippet
+| order by TimeGenerated desc, Count desc
+
+// Option C: If you use Application Insights or custom table
+// traces
+// | where timestamp > ago(24h)
+// | where message contains "error" or severityLevel >= 3
+// | project timestamp, message, severityLevel, operation_Name
+// | order by timestamp desc
