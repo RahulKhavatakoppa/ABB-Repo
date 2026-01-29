@@ -1,0 +1,10 @@
+# Production environment parameters – Task 4
+variables:
+  - name: AppUrl
+    value: 'https://devops-assessment.azurewebsites.net'
+  - name: Replicas
+    value: '3'
+  - name: NodeEnv
+    value: 'production'
+  - name: LogLevel
+    value: 'warn'

@@ -1,0 +1,16 @@
+
+resource_group_name = "rg-aks-devops-assessment"
+location            = "East US"
+cluster_name        = "aks-devops-assessment"
+dns_prefix          = "aks-devops"
+node_count          = 2
+node_vm_size        = "Standard_B2s"
+enable_auto_scaling = true
+node_min_count      = 1
+node_max_count      = 4
+log_retention_days  = 30
+
+tags = {
+  Environment = "Assessment"
+  Task        = "Task5"
+}
